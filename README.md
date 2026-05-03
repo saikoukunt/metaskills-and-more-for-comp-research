@@ -2,7 +2,7 @@
 
 (This README is a quick overview of this repo. If you are overwhelmed by all the words and don't know where to start, look at the`aaaaa-help` folder! )
 
-Computational researchers have to know a lot of meta-skills that don't ever get taught formally: project management, using a shell, code organization, writing, figure making, etc. I was really overwhelmed when I first started. I desperately wanted one place where I could figure out what I needed to learn and find resources for learning them. As I've gained more experience doing research and continuing to learn new things, I've also realized that documenting things makes it way easier to work with other people, including your past/future self.
+Computational researchers have to know a lot of meta-skills that don't ever get taught formally: project management, using a shell, code organization, writing, figure making, etc. I was really overwhelmed when I first started. I desperately wanted one place where I could figure out what I needed to learn and find resources for learning them. As I've gained more experience doing research, I've also realized that writing notes and documenting workflows makes it way easier to work with other people, including your past/future self.
 
 Because I am benevolent and also forget anything I haven't used in the past month, I made this repo to deposit all the knowledge I have hunted and gathered. Hopefully this will allow others to not suffer as I have. It is very much under construction at the moment, but it appears that it will become a conglomeration of explanatory guides for meta-skills, summaries of advanced/niche technical skills, opinionated standard procedures for doing and disseminating research, and reference sheets for when you forget a shortcut or command.
 
