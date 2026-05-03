@@ -1,5 +1,23 @@
 # Shell Basics
 
+[//]: # (TODO: add section about quotes)
+
+## Contents
+
+- [Contents](#contents)
+- [What is a shell and why should you use it?](#what-is-a-shell-and-why-should-you-use-it)
+- [Navigating](#navigating)
+  - [Shell keyboard shortcutrs](#shell-keyboard-shortcutrs)
+  - [Changing directories with `cd`](#changing-directories-with-cd)
+  - [Getting help with `man`](#getting-help-with-man)
+- [What can you do in the shell?](#what-can-you-do-in-the-shell)
+  - [The `$PATH` environment variable](#the-path-environment-variable)
+  - [Unix utilities: `ls`, `cat`, `grep`, `sed`, `awk`](#unix-utilities-ls-cat-grep-sed-awk)
+  - [Manipulating files](#manipulating-files)
+  - [File-system permissions](#file-system-permissions)
+  - [The shell language](#the-shell-language)
+- [Links](#links)
+
 ## What is a shell and why should you use it?
 
 A _shell_ is a textual interface for using a computer that lets you navigate the filesystem and run programs. It might look scary at first because all the pretty pictures you're used to have been replaced by text, but the shell has a few important advantages over graphical user interfaces (GUIs):
@@ -35,17 +53,20 @@ hello
 
 The command above ran the `echo` program with the argument `hello`. Like its name suggests, `echo` just prints each of its arguments. When you type in a command, the shell _parses_ it by splitting on whitespace, interpreting the first word as the name of a command you want to run, and passing the remaining words to the program as arguments.
 
+### Shell keyboard shortcutrs
+
 A few basic keyboard shortcuts before we move onto specific programs:
 
-- From the shell prompt, the up arrow key will let you recall the previous command. You can press it again to recall commands from further back, or use the down arrow if you go too far back and want to recall a more recent command.
+- The up and down arrow keys let you scroll through the previous prompts one at a time.
+- `Ctrl` + `R` lets you search for a previous command.
 - `Ctrl` + `C` kills a program and returns you to the shell prompt.
 - `Ctrl` + `D` closes the current shell or program when the cursor is on an empty line.
 - `Ctrl` + `L` clears the terminal screen.
 - `Ctrl` + `A` or `Ctrl` + `E` moves the cursor to the beginning or end of the line respectively.
 - `Ctrl` + `U` erases the whole current line.
-- `Ctrl` + `R` lets you search for a previous command.
 - In general, pressing `q` from inside a program will quit and return you to the shell.
-- In most shells, including bash, zsh, and fish, you can press `Tab` after typing the beginning of a program or file to autocomplete. If only one match exists, the shell will automatically fill in the rest of the name. If there are no matching entries, nothing happens. If there's more than one matching entry, the shell will print all matches on the next line of the terminal, but leave the current line untouched with your cursor still on it. In this case, you can be as lazy as possible by looking at the matches, typing enough characters so there's only one possible match, and pressing `Tab` again!
+
+In most shells, including bash, zsh, and fish, you can press `Tab` after typing the beginning of a program or file to autocomplete. If only one match exists, the shell will automatically fill in the rest of the name. If there are no matching entries, nothing happens. If there's more than one matching entry, the shell will print all matches on the next line of the terminal. You can press `Tab` again to cycle through the options, but if there are many of them, you may want to type some more characters before pressing `Tab` again to autocomplete.
 
 ### Changing directories with `cd`
 
@@ -120,6 +141,8 @@ saikoukuntla@Sais-Macbook ~ % which echo
 ```
 
 We can see that the `echo` program is actually located in the `/bin` folder. You can also add directories to the `$PATH` so that you can run new programs from the shell with just their names (instead of their absolute or relative paths)! Some CLI programs will remind you to do this when you install them.
+
+You can see a list of all the environment variables with the `env` command (no arguments).
 
 ### Unix utilities: `ls`, `cat`, `grep`, `sed`, `awk`
 
@@ -251,6 +274,8 @@ If you try to operate on a file without the appropriate permissions, you'll get 
 
 You might have noticed from above that the `-exec` flag from `find` let you flexibly combine it with other programs to perform very specific operations. If you were hoping that you could do that with arbitrary programs, you're in luck! Shells actually implement a full programming language that lets you chain programs together, gives programs text files as input or output, and execute programs conditionally.
 
+#### Pipes (`|`) and `xargs`
+
 Pipes (`|`) let you automatically pass the standard output of one program into the standard input of another. Say we want to print the first 5 lines of each Python file in the current directory with the string `TODO` in it. We know that `head` can print the first few lines of files that are passed in as arguments, and `grep -l TODO *.py` will print the filenames of the TODO files to the standard output. If we just piped `grep`'s output to `head`, `head` would read from standard input and print the first 5 lines of `grep`'s output — i.e., the first 5 filenames. What we actually want is for those filenames to become arguments to `head`, so it opens each file and prints its first 5 lines. Converting standard input to arguments is a common enough use case that `xargs` exists for it. Combining a pipe and `xargs` lets you chain the standard output of one program to the arguments of another:
 
 ```shell-session
@@ -259,7 +284,15 @@ saikoukuntla@Sais-Macbook ~ % grep -l TODO *.py | xargs head -n 5
 
 No special `-exec` flag required! Note that pipes consume the standard output of a program, so only the last program in the pipe will print to the terminal.
 
-You can also have programs read and write files instead of the command-line: appending `>file` to a command will write its output to `file`, creating `file` if it doesn't exist and overwriting its content if it does. If you want to append to `file` instead, you can use `>>file`. Like pipes, these file redirects will also consume the standard output. If you want to see what gets saved to the file, you can use `tee file`, which both saves its input to `file` _and_ prints the input to standard output. You can also give programs inputs from files using `<file`.
+#### Redirects (`>`, `>>`, `<`)
+
+You can also have programs read and write files instead of the command-line: appending `>file` to a command will write its output to `file`, creating `file` if it doesn't exist and overwriting its content if it does. Keep in mind that the output file is opened and erased _before_ the program does its job, so something like `sort file >file` erases the contents of the file instead of saving a sorted version (use `sort -o` instead).
+
+If you want to append to `file` instead, you can use `>>file`. Like pipes, these file redirects will also consume the standard output. If you want to see what gets saved to the file, you can use `tee file`, which both saves its input to `file` _and_ prints the input to standard output.
+
+You can also give programs inputs from files using `<file`.
+
+#### Conditionals and Loops
 
 You can specify conditionals like `if command1; then command2; command3; fi`, which will execute `command1`, and if it doesn't throw an error, also run `command2` and `command3`. You can also specify an else branch. The common way to use `if` is with the `test` command, which is a program that evaluates conditionals. For example, you can do `test -f file` or `[ -f file ]`to check if a file exists or `[ "$var" = "string" ]` to branch on the value of an environment variable. Here, `[` is just an alias for the test program that makes shell programs easier to write. The spaces in these commands are important and easy to omit, but if you remember that `[` is a program, you can deduce that it should have a space after it.
 
@@ -291,6 +324,5 @@ Don't worry if you don't understand everything in here yet! For now I'll focus o
 
 ## Links
 
-The cheatsheet [here](../cheatsheets/shell-basics.md) summarizes the concepts, programs, and commands covered in this document.
-
-This guide borrows from the [Missing Semester course](https://missing.csail.mit.edu/2026/course-shell/), with some reorganization and more beginner-friendly details.
+- This [cheatsheet](../cheatsheets/shell-basics.md) summarizes the concepts, programs, and commands covered in this document.
+- This guide borrows from the [Missing Semester course](https://missing.csail.mit.edu/2026/course-shell/) but adds more beginner-friendly details and extra content that I think beginners should know (shortcuts, permissions, file manipulation, etc.).
