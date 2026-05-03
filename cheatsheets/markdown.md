@@ -2,18 +2,22 @@
 tags:
   - guides/coding/markdown
 ---
+
 # Heading 1
-## Heading 2 
+
+## Heading 2
+
 ### Heading 3
+
 #### Heading 4
 
 **Bold**
 
-*Italic*
+_Italic_
 
 - Bullet Item 1
 - Bullet Item 2
-	- Nested
+  - Nested
 
 1. Number one
 2. Number two
@@ -35,4 +39,3 @@ Footnote[^1]
 [^1]: This is a footnote
 
 <kbd>⌘</kbd>s
-

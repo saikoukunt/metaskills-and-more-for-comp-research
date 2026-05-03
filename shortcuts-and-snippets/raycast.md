@@ -1,12 +1,12 @@
 ## Stems
 For when I remember the command key but not the stem
 
-| Action                 |                            Shortcut                            |
-| :--------------------- | :------------------------------------------------------------: |
-| [[#Raycast Features]]  |                       ⌘ + ⌥ <kbd></kbd>                        |
-| [[#Launching Apps]]    | <kbd>Caps Lock</kbd><br>⌥ (secondary)<br>⌘ + ⌥ (tertiary) <br> |
-| [[#Window Management]] |                             ⌃ + ⌥                              |
-
+| Action                                  |                            Shortcut                            |
+| :-------------------------------------- | :------------------------------------------------------------: |
+| [Raycast Features](#raycast-features)   |                             ⌘ + ⌥                              |
+| [Launching Apps](#launching-apps)       | <kbd>Caps Lock</kbd><br>⌥ (secondary)<br>⌘ + ⌥ (tertiary) <br> |
+| [Window Management](#window-management) |                             ⌃ + ⌥                              |
+|                                         |                                                                |
 ## Raycast Features
 These generally use ⌘ + ⌥  as a stem for shortcuts, or the first few letters of the words for keywords.
 
@@ -45,7 +45,7 @@ I generally use <kbd>Caps Lock</kbd> + <kbd>first letter</kbd> to launch apps (<
 | Spotify                  | <kbd>Caps Lock</kbd> + <kbd>S</kbd> |
 | System Settings          | <kbd>Caps Lock</kbd> + <kbd>,</kbd> |
 | Terminal                 |          `Caps Lock` + `T`          |
-| `VS Code`                | <kbd>Caps Lock</kbd> + <kbd>V</kbd> |
+| VS Code                | <kbd>Caps Lock</kbd> + <kbd>V</kbd> |
 | Zotero                   | <kbd>Caps Lock</kbd> + <kbd>Z</kbd> |
 | Zoom                     |          ⌥ + <kbd>Z</kbd>           |
 
